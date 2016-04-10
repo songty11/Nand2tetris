@@ -1,0 +1,97 @@
+
+/**
+ * Implements a graphic Board. A graphic Board has a screen location
+ * and a size. It also has methods for drawing, erasing, moving on the 
+ * screen
+ */
+class Board {
+
+    // Location on the screen
+    field int x, y, width, height,speed;
+    constructor Board new(int s,int w) {
+        let x = 215;
+        let y = 245;
+        let width = w;
+        let height = 5;
+        let speed = s;
+        do draw();
+
+        return this;
+    }
+
+    /** Deallocates the object's memory. */
+    method void dispose() {
+        do Memory.deAlloc(this);
+        return;
+    }
+
+    /** Draws the Board on the screen. */
+    method void draw() {
+        do Screen.setColor(true);
+        do Screen.drawRectangle(x, y, x + width, y + height);
+        return;
+    }
+
+    /** Erases the Board from the screen. */
+    method void erase() {
+        do Screen.setColor(false);
+        do Screen.drawRectangle(x, y, x + width, y + height);
+        return;
+    }
+
+    /** Moves left by 1 speed. */
+    method void moveLeft() {
+    if (x > speed) {
+        do Screen.setColor(false);
+        do Screen.drawRectangle((x + width) - speed, y, x + width, y + height);
+        let x = x - speed;
+        do Screen.setColor(true);
+        do Screen.drawRectangle(x, y, x + speed, y + height);
+    }
+    else
+    {
+        do Screen.setColor(false);
+        do Screen.drawRectangle(x, y, x + width, y + height);
+        let x = 1;
+        do Screen.setColor(true);
+        do Screen.drawRectangle(x, y, x + width, y + height);
+
+    }
+    return;
+    }
+
+    /** Moves right by speed. */
+    method void moveRight() {
+        if ((x + width + speed) < 510) {
+            do Screen.setColor(false);
+            do Screen.drawRectangle(x, y, x + speed, y + height);
+            let x = x + speed;
+            do Screen.setColor(true);
+            do Screen.drawRectangle((x + width) - speed, y, x + width, y + height);
+        }
+        else
+        {
+            do Screen.setColor(false);
+            do Screen.drawRectangle(x, y, x + width, y + height);
+            let x = 510 - width;
+            do Screen.setColor(true);
+            do Screen.drawRectangle(x, y, x + width, y + height);
+        }
+        return;
+    }
+
+    //get the x position of board
+    method int getX()
+    {
+        return x;
+    }
+
+    //get the width of board
+    method int getwidth()
+    {
+        return width;
+    }
+
+
+    
+}

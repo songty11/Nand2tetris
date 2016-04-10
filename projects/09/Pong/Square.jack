@@ -1,0 +1,227 @@
+
+/**
+ * Implements a graphic square. A graphic square has a screen location
+ * and a size. It also has methods for drawing, erasing, moving on the 
+ * screen
+ */
+class Square {
+
+    // Location on the screen
+    field int x, y;
+
+    // The size of the square
+    field int size;
+
+    field int vx,vy;
+
+    /** Constructs a new square with a given location and size. */
+    constructor Square new(int Ax, int Ay) {
+        let x = Ax;
+        let y = Ay;
+        let size = 5;
+        let vx = 1;
+        let vy = 1;
+
+        do draw();
+
+        return this;
+    }
+
+    /** Deallocates the object's memory. */
+    method void dispose() {
+        do Memory.deAlloc(this);
+        return;
+    }
+
+    /** Draws the square on the screen. */
+    method void draw() {
+        do Screen.setColor(true);
+        do Screen.drawRectangle(x, y, x + size, y + size);
+        return;
+    }
+
+    /** Erases the square from the screen. */
+    method void erase() {
+        do Screen.setColor(false);
+        do Screen.drawRectangle(x, y, x + size, y + size);
+        return;
+    }
+
+    /** Moves up by 1 pixels. */
+    method void moveUp() {
+        if (y > 1) {
+            do Screen.setColor(false);
+            do Screen.drawRectangle(x, (y + size) - 1, x + size, y + size);
+            let y = y - 2;
+            do Screen.setColor(true);
+            do Screen.drawRectangle(x, y, x + size, y + 1);
+        }
+        else
+        {
+            let vy = -vy;
+        }
+        return;
+    }
+
+    /** Moves down by 1 pixels. */
+    method void moveDown() {
+        if ((y + size) < 254) {
+            do Screen.setColor(false);
+            do Screen.drawRectangle(x, y, x + size, y + 1);
+            let y = y + 1;
+            do Screen.setColor(true);
+            do Screen.drawRectangle(x, (y + size) - 1, x + size, y + size);
+        }
+        return;
+    }
+
+    /** Moves left by 1 pixels. */
+    method void moveLeft() {
+        if (x > 1) {
+            do Screen.setColor(false);
+            do Screen.drawRectangle((x + size) - 1, y, x + size, y + size);
+            let x = x - 1;
+            do Screen.setColor(true);
+            do Screen.drawRectangle(x, y, x + 1, y + size);
+        }
+        else
+        {
+            let vx = -vx;
+        }
+        return;
+    }
+
+    /** Moves right by 1 pixels. */
+    method void moveRight() {
+        if ((x + size) < 510) {
+            do Screen.setColor(false);
+            do Screen.drawRectangle(x, y, x + 1, y + size);
+            let x = x + 1;
+            do Screen.setColor(true);
+            do Screen.drawRectangle((x + size) - 1, y, x + size, y + size);
+        }
+        else
+        {
+            let vx = -vx;
+        }
+        return;
+    }
+
+    //get position of square
+    method int getY()
+    {
+        return y;
+    }
+
+    method int getX()
+    {
+        return x;
+    }
+
+    //get the size of square
+    method int getsize()
+    {
+        return size;
+    }
+
+    //direction change
+    method void turnYBack()
+    {
+        let vy = -vy;
+        return;
+    }
+   
+    //direction change
+    method void turnXBack()
+    {
+        let vx = -vx;
+        return;
+    }
+
+    //speed up the square
+    method void speedup(int s)
+    {
+        if(vx<0)
+        {
+            let vx = vx-s;
+        }
+        else
+        {
+            let vx = vx+s;
+        }
+        return;
+    }
+
+    //slow down the square
+    method void slowdown(int s)
+    {
+        if(vx<0)
+        {
+            let vx = vx+s;
+        }
+        else
+        {
+            let vx = vx-s;
+        }
+        return;
+    }
+
+    //get the direction in x axis of square  1 for left, 2 for right
+    method int getdir()
+    {
+        if(vx > 0)
+        {
+            return 2;
+        }
+        else
+        {
+            return 1;
+        }
+    }
+
+    //move the square for 1 step with the given speed.
+    method void moveOneStep()
+    {
+        var int absvx;
+        var int absvy;
+        var int i;
+        var int j;
+
+        let absvx = Math.abs(vx);
+        let absvy = Math.abs(vy);   
+        let i = 0;
+
+        //in x direction, move absvx steps
+        while(i < absvx)
+        {
+            
+            
+            if(vx > 0)
+            {
+               do moveRight();
+            }
+            else
+            {
+               do moveLeft();
+            }
+
+            let i = i + 1;
+
+            
+        }
+        let j = 0;
+        while(j < absvy)
+        {
+            if(vy > 0)
+            {
+                do moveDown();
+            }
+            else
+            {
+                do moveUp();
+            }
+            let j = j + 1;
+        }
+        return;
+    }
+}

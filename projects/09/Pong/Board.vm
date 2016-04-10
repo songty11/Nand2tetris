@@ -1,0 +1,236 @@
+function Board.new 0
+push constant 5
+call Memory.alloc 1
+pop pointer 0
+push constant 215
+pop this 0
+push constant 245
+pop this 1
+push argument 1
+pop this 2
+push constant 5
+pop this 3
+push argument 0
+pop this 4
+push pointer 0
+call Board.draw 1
+pop temp 0
+push pointer 0
+return
+function Board.dispose 0
+push argument 0
+pop pointer 0
+push pointer 0
+call Memory.deAlloc 1
+pop temp 0
+push constant 0
+return
+function Board.draw 0
+push argument 0
+pop pointer 0
+push constant 0
+not
+call Screen.setColor 1
+pop temp 0
+push this 0
+push this 1
+push this 0
+push this 2
+add
+push this 1
+push this 3
+add
+call Screen.drawRectangle 4
+pop temp 0
+push constant 0
+return
+function Board.erase 0
+push argument 0
+pop pointer 0
+push constant 0
+call Screen.setColor 1
+pop temp 0
+push this 0
+push this 1
+push this 0
+push this 2
+add
+push this 1
+push this 3
+add
+call Screen.drawRectangle 4
+pop temp 0
+push constant 0
+return
+function Board.moveLeft 0
+push argument 0
+pop pointer 0
+push this 0
+push this 4
+gt
+if-goto IF_TRUE0
+goto IF_FALSE0
+label IF_TRUE0
+push constant 0
+call Screen.setColor 1
+pop temp 0
+push this 0
+push this 2
+add
+push this 4
+sub
+push this 1
+push this 0
+push this 2
+add
+push this 1
+push this 3
+add
+call Screen.drawRectangle 4
+pop temp 0
+push this 0
+push this 4
+sub
+pop this 0
+push constant 0
+not
+call Screen.setColor 1
+pop temp 0
+push this 0
+push this 1
+push this 0
+push this 4
+add
+push this 1
+push this 3
+add
+call Screen.drawRectangle 4
+pop temp 0
+goto IF_END0
+label IF_FALSE0
+push constant 0
+call Screen.setColor 1
+pop temp 0
+push this 0
+push this 1
+push this 0
+push this 2
+add
+push this 1
+push this 3
+add
+call Screen.drawRectangle 4
+pop temp 0
+push constant 1
+pop this 0
+push constant 0
+not
+call Screen.setColor 1
+pop temp 0
+push this 0
+push this 1
+push this 0
+push this 2
+add
+push this 1
+push this 3
+add
+call Screen.drawRectangle 4
+pop temp 0
+label IF_END0
+push constant 0
+return
+function Board.moveRight 0
+push argument 0
+pop pointer 0
+push this 0
+push this 2
+add
+push this 4
+add
+push constant 510
+lt
+if-goto IF_TRUE0
+goto IF_FALSE0
+label IF_TRUE0
+push constant 0
+call Screen.setColor 1
+pop temp 0
+push this 0
+push this 1
+push this 0
+push this 4
+add
+push this 1
+push this 3
+add
+call Screen.drawRectangle 4
+pop temp 0
+push this 0
+push this 4
+add
+pop this 0
+push constant 0
+not
+call Screen.setColor 1
+pop temp 0
+push this 0
+push this 2
+add
+push this 4
+sub
+push this 1
+push this 0
+push this 2
+add
+push this 1
+push this 3
+add
+call Screen.drawRectangle 4
+pop temp 0
+goto IF_END0
+label IF_FALSE0
+push constant 0
+call Screen.setColor 1
+pop temp 0
+push this 0
+push this 1
+push this 0
+push this 2
+add
+push this 1
+push this 3
+add
+call Screen.drawRectangle 4
+pop temp 0
+push constant 510
+push this 2
+sub
+pop this 0
+push constant 0
+not
+call Screen.setColor 1
+pop temp 0
+push this 0
+push this 1
+push this 0
+push this 2
+add
+push this 1
+push this 3
+add
+call Screen.drawRectangle 4
+pop temp 0
+label IF_END0
+push constant 0
+return
+function Board.getX 0
+push argument 0
+pop pointer 0
+push this 0
+return
+function Board.getwidth 0
+push argument 0
+pop pointer 0
+push this 2
+return

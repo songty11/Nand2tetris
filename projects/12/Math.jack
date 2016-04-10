@@ -1,0 +1,160 @@
+// This file is part of www.nand2tetris.org
+// and the book "The Elements of Computing Systems"
+// by Nisan and Schocken, MIT Press.
+// File name: projects/12/Math.jack
+
+/**
+ * A basic math library.
+ */
+class Math {
+    
+    static int twoPower;
+
+    /** Initializes the library. */
+    function void init() {
+        let twoPower = Array.new(16);
+
+        let twoPower[0] = 1;
+        let twoPower[1] = 2;
+        let twoPower[2] = 4;
+        let twoPower[3] = 8;
+        let twoPower[4] = 16;
+        let twoPower[5] = 32;
+        let twoPower[6] = 64;
+        let twoPower[7] = 128;
+        let twoPower[8] = 256;
+        let twoPower[9] = 512;
+        let twoPower[10] = 1024;
+        let twoPower[11] = 2048;
+        let twoPower[12] = 4096;
+        let twoPower[13] = 8192;
+        let twoPower[14] = 16384;
+        let twoPower[15] = 16384 + 16384;
+
+        return;
+    }
+
+    /** Returns the absolute value of x. */
+    function int abs(int x) 
+    {
+        if(x > 0)
+        {
+            return x;
+        }
+        else
+        {
+            return -x;
+        }
+    }
+
+    function boolean bit(int x, int n) {
+        return ~((x & twoPower[n]) = 0);
+    }
+
+    /** Returns the product of x and y. */
+    function int multiply(int x, int y) 
+    {
+        var int sum, shift;
+        var int j;
+        
+        let sum = 0;
+        let shift = x;
+        let j = 0;
+        while( j < 16 ) {   // 16-bit numbers
+            if(Math.bit(y, j)) {
+                let sum = sum + shift;
+            }
+            let shift = shift + shift;
+            let j = j + 1;
+        }
+        return sum;
+
+    }
+
+    /** Returns the integer part of x/y. */
+    function int divide(int x, int y) 
+    {
+        var int negx, negy;
+        var int q;
+        var int res;
+        
+        let negx = x < 0;
+        let negy = y < 0;
+
+        let x = Math.abs(x);
+        let y = Math.abs(y);
+
+        if( y > x ) 
+        {
+            return 0;
+        }
+
+        let q = Math.divide(x, y+y);
+        if(x-(2*q*y) < y) 
+        {
+            let res = q + q;
+        }
+        else {
+            let res = q + q + 1;
+        }
+        
+        if( negx = negy ) 
+        {
+            return res;
+        }
+        else 
+        {
+            return -res;
+        }
+    }
+
+    /** Returns the integer part of the square root of x. */
+    function int sqrt(int x)
+     {
+
+        var int j, y;
+        var int approx;
+        var int approx_squared;
+        
+        let y = 0;
+        let j = 7; 
+        while(~(j < 0)) 
+        {
+            let approx = y + twoPower[j];
+            let approx_squared = approx * approx;
+            if(~(approx_squared > x) & (approx_squared > 0))
+            {  
+                let y = approx;
+            }
+            
+            let j = j - 1;
+        }
+        return y;
+    }
+
+    /** Returns the greater number. */
+    function int max(int a, int b) {
+        if(a > b)
+        {
+            return a;
+        }
+        else
+        {
+            return b;
+        }
+    }
+
+    /** Returns the smaller number. */
+    function int min(int a, int b) {
+
+        if(a > b)
+        {
+            return b;
+        }
+        else
+        {
+            return a;
+        }
+
+    }
+}
